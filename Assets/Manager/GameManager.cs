@@ -6,10 +6,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public InputManager inputManager;
+    //public InputManager inputManager;
 
 
     public static GameManager Instance { get; private set; }
+
+    [Header("Manager References (Auto-Assigned")]
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] private PlayerController playerController; 
+
+    // public read-only accessors for other scripts to use the manager
+    public InputManager InputManager => inputManager;
+    public GameStateManager GameStateManager => gameStateManager;
+    public playerController => playerController; 
+
 
     private void Awake() 
     {
@@ -27,8 +38,11 @@ public class GameManager : MonoBehaviour
 
         #endregion
 
-        inputManager = GetComponentInChildren<InputManager>();
-
+        //Auto-assign manager reference from child object if 
+        
+        inputManager ??= GetComponentInChildren<InputManager>();
+        gameStateManager ??= GetComponentInChildren<GameStateManager>();
+        playerController ??= GetComponentInChildren<playerController>(); 
     }
 
     

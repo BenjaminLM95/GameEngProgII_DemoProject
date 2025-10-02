@@ -4,9 +4,19 @@ using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum MovementState 
+    {
+        Idle,
+        Walking,
+        Sprinting,
+        Crouching,
+        Jumping,  // Or integrate into velocity checks
+        Falling
+    }
+
     // Manager References
 
-    private InputManager inputManager => GameManager.Instance.inputManager;
+    private InputManager inputManager => GameManager.Instance.InputManager;
     private CharacterController characterController => GetComponent<CharacterController>();
 
     [SerializeField] private Transform cameraRoot;
@@ -28,7 +38,7 @@ public class PlayerController : MonoBehaviour
     // Other variables
     [Header("Move Setting")]
     [SerializeField] private float movSpeed;
-    [SerializeField] private float crunchMoveSpeed;
+    [SerializeField] private float crouchMoveSpeed;
     [SerializeField] private float sprintMoveSpeed;
     [SerializeField] private float speedTransitionDuration;
     [SerializeField] private float currentMoveSpeed;
@@ -67,12 +77,22 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetCenter;
     private float targetCamY; // Target Y position for camera root during crouch transition
 
-        public Transform spawnPosition;
-       
+    private int playerLayerMask;
+
+    public Transform spawnPosition;
+
+    public MovementState currentMovementState;
+
 
     private void Awake() 
     {
         movSpeed = 5f;
+        crouchMoveSpeed = 3f;
+        playerLayerMask = ~LayerMask.GetMask("Player");
+
+        #region Initialize Default values
+        currentMovementState = MovementState.Idle; 
+
         // Initialize crouch variables
         standingHeight = characterController.height;
         standingCenter = characterController.center;
@@ -81,55 +101,41 @@ public class PlayerController : MonoBehaviour
         targetHeight = standingHeight;
         targetCenter = standingCenter;
         targetCamY = cameraRoot.localPosition.y;
+
+        crouchInput = false;
+        sprintInput = false;
+
+        #endregion
+
     }
 
     private void Update()
     {
-        HandlePlayerMovement();
+        //HandlePlayerMovement();
     }
 
     private void LateUpdate()
     {
-        HandlePlayerLook(); 
+        //HandlePlayerLook(); 
     }
 
     public void HandlePlayerMovement() 
     {
         if (!moveEnabled) return;
 
+        //DetermineMovementState
+        DetermineMovementState(); 
+
+        // Performe Ground check
         GroundedCheck();
+
+        // Handle crouch transition
         HandleCrouchTransition(); 
-        // Step 1: Get input direction
-        Vector3 moveInputDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        Vector3 worldMoveDirection = transform.TransformDirection(moveInputDirection);
 
-        // Step 2: Determine movement speed
-        float targetSpeed;
+        //Apply movement
+        ApplyMovement();
 
-        if (sprintInput)
-            targetSpeed = sprintMoveSpeed;
-        else
-            targetSpeed = movSpeed;
-
-        // Step 3: Smoothly interpolate current speed towards targer speed
-        float lerpSpeed = 1f - Mathf.Pow(0.01f, Time.deltaTime / speedTransitionDuration);
-        currentMoveSpeed = Mathf.Lerp(currentMoveSpeed, targetSpeed, lerpSpeed); 
-
-        // Step 4: Handle horizontal movement
-        Vector3 horizontalMovement = worldMoveDirection * currentMoveSpeed;
-
-        // Step 5: Handle jumping and gravity
-
-        ApplyJumpAndGravity();
-
-        // Step 6: Combine horizontal and vertical movement
-
-        Vector3 movement = horizontalMovement;
-        movement.y = velocity.y; 
-
-        // Step 7: Apply final movement
-
-        characterController.Move(movement * Time.deltaTime); 
+       
 
 
     }
@@ -191,9 +197,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // float maxAllowedHeight = GetMaxAllowedHeight();
-
-            float maxAllowedHeight = 3.0f;
+            float maxAllowedHeight = GetMaxAllowedHeight();
 
             if (maxAllowedHeight >= standingHeight - 0.05f)
             {
@@ -226,6 +230,100 @@ public class PlayerController : MonoBehaviour
         Vector3 currentCamPos = cameraRoot.localPosition;
         cameraRoot.localPosition = new Vector3(currentCamPos.x, Mathf.Lerp(currentCamPos.y, targetCamY, lerpSpeed), currentCamPos.z);
 
+    }
+
+    private void DetermineMovementState() 
+    {
+        // determine current movement state based on input and condition
+        // if the player is not grounded, they are either jumping or falling
+
+        if (!isGrounded) 
+        {
+            if(velocity.y > 0.1f) 
+            {
+                currentMovementState = MovementState.Jumping;
+            }
+            else if(velocity.y < 0) 
+            {
+                currentMovementState = MovementState.Falling;
+            }
+        }
+        else if (isGrounded) 
+        {
+            if(crouchInput || isObstructed) 
+            {
+                currentMovementState = MovementState.Crouching;
+            }
+            else if(sprintInput && currentMovementState != MovementState.Crouching) 
+            {
+                currentMovementState = MovementState.Sprinting;
+            }
+            else if(moveInput.magnitude > 0.1f && !sprintInput && !crouchInput) 
+            {
+                currentMovementState = MovementState.Walking; 
+            }
+            else if(moveInput.magnitude <= 0.1f && !sprintInput && !crouchInput) 
+            {
+                currentMovementState= MovementState.Idle;
+            }
+        }
+
+    }
+
+    private void ApplyMovement() 
+    {
+        // Step 1: Get input direction
+        Vector3 moveInputDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        Vector3 worldMoveDirection = transform.TransformDirection(moveInputDirection);
+
+        // Step 2: Determine movement speed
+        float targetSpeed;
+
+
+        switch (currentMovementState) 
+        {
+            case MovementState.Crouching:
+                {
+                    targetSpeed = crouchMoveSpeed;
+                    break;
+                }
+            case MovementState.Sprinting: 
+                {
+                    targetSpeed = sprintMoveSpeed;
+                    break;
+                }
+            default: 
+                {
+                    targetSpeed = movSpeed;
+                    break;
+                }
+        }
+
+
+        if (sprintInput)
+            targetSpeed = sprintMoveSpeed;
+        else
+            targetSpeed = movSpeed;
+
+        // Step 3: Smoothly interpolate current speed towards targer speed
+        float lerpSpeed = 1f - Mathf.Pow(0.01f, Time.deltaTime / speedTransitionDuration);
+        currentMoveSpeed = Mathf.Lerp(currentMoveSpeed, targetSpeed, lerpSpeed);
+
+        // Step 4: Handle horizontal movement
+        Vector3 horizontalMovement = worldMoveDirection * currentMoveSpeed;
+
+        // Step 5: Handle jumping and gravity
+
+        ApplyJumpAndGravity();
+
+        // Step 6: Combine horizontal and vertical movement
+
+        Vector3 movement = horizontalMovement;
+        movement.y = velocity.y;
+
+        // Step 7: Apply final movement
+
+        characterController.Move(movement * Time.deltaTime);
     }
 
     public void HandlePlayerLook() 
@@ -290,6 +388,27 @@ public class PlayerController : MonoBehaviour
     private void GroundedCheck() 
     {
         isGrounded = characterController.isGrounded;
+    }
+
+    private float GetMaxAllowedHeight() 
+    {
+        RaycastHit hit;
+        float maxCheckDistance = standingHeight + 0.15f; 
+        // Cast a ray upwards from the character's position to check for obstructions
+
+        if(Physics.Raycast(transform.position, Vector3.up, out hit, maxCheckDistance, playerLayerMask)) 
+        {
+            //we hit something, so calculate the maximum height the player can stand
+            // Substrac a small buffer to prevent clipping
+            float maxHeight = hit.distance - 0.1f;
+
+            maxHeight = Mathf.Max(maxHeight, crouchingHeight);
+
+            Debug.Log($"Overhead obstruction detected. Max allowed height: {maxHeight: F2}");
+            return maxHeight;
+        }
+
+        return standingHeight;
     }
 
 
