@@ -472,4 +472,7 @@ public class PlayerController : MonoBehaviour
         inputManager.CrouchInputEvent -= HandleCrouch;
         inputManager.SprintInputEvent -= HandleSprint; 
     }
+
+
+    
 }

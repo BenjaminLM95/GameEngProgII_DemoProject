@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
     [Header("Manager References (Auto-Assigned")]
     [SerializeField] private InputManager inputManager;
     [SerializeField] private GameStateManager gameStateManager;
-    [SerializeField] private PlayerController playerController; 
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private UIManager uiManager; 
 
     // public read-only accessors for other scripts to use the manager
     public InputManager InputManager => inputManager;
     public GameStateManager GameStateManager => gameStateManager;
-    public playerController => playerController; 
+    public PlayerController PlayerController => playerController; 
+    public UIManager UIManager => uiManager;
 
 
     private void Awake() 
@@ -42,7 +44,8 @@ public class GameManager : MonoBehaviour
         
         inputManager ??= GetComponentInChildren<InputManager>();
         gameStateManager ??= GetComponentInChildren<GameStateManager>();
-        playerController ??= GetComponentInChildren<playerController>(); 
+        playerController ??= GetComponentInChildren<PlayerController>();
+        uiManager ??= GetComponentInChildren<UIManager>(); 
     }
 
     

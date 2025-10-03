@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem; 
 
 public class GameState_Gameplay : IState
 {
-    GameManager gameManager => gameManager.Instance;
-    GameStateManager gameStateManager => gameManager.Instance.GameStateManager;
-    PlayerController playerController => gameManager.Instance.PlayerController; 
+    GameManager gameManager => GameManager.Instance;
+    GameStateManager gameStateManager => GameManager.Instance.GameStateManager;
+    PlayerController playerController => GameManager.Instance.PlayerController;
+    UIManager uiManager => GameManager.Instance.UIManager;
+   
+    
 
     #region Singleton Instance
 
@@ -20,7 +24,8 @@ public class GameState_Gameplay : IState
 
     public void EnterState() 
     {
-        Debug.Log("Entered Gameplay state"); 
+        Debug.Log("Entered Gameplay state");
+        uiManager.EnableGameplay(); 
     }
 
     public void FixedUpdateState() 
@@ -34,10 +39,24 @@ public class GameState_Gameplay : IState
 
         playerController.HandlePlayerMovement(); 
 
-        if (Keyboard.current[Key.P].wasPressThisFrame) 
+        if (Keyboard.current[Key.M].wasPressedThisFrame) 
         {
-            gameStateManager.SwitchToState(GameState_MainMenu.Instance); 
+            gameStateManager.SwitchToState(GameState_MainMenu.Instance);
+            Cursor.visible = true;
         }
+
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
+        {
+            gameStateManager.Pause();
+            Cursor.visible = true;
+            
+        }
+
+        if (Keyboard.current[Key.K].wasPressedThisFrame) 
+        {
+            gameStateManager.GameOver(); 
+        }
+
     }
 
     public void LateUpdateState() 
@@ -51,4 +70,6 @@ public class GameState_Gameplay : IState
     {
         Debug.Log("Exiting Gameplay State"); 
     }
+
+    
 }
