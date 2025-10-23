@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/PauseUSS.uss?fileID=7433441132597879392&amp;guid=c7f7d6de5a7664d4888a54ef7b6098f1&amp;type=3#PauseUSS" />
+    <ui:VisualElement style="flex-grow: 1; font-size: 60px; -unity-text-align: upper-center;">
+        <ui:Label text="Paused" style="-unity-text-align: upper-center;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Buttons" style="flex-grow: 1;">
+        <ui:Button text="Resume" name="ResumeBtn" class="pauseButton" style="width: 12.5%;" />
+        <ui:Button text="Main Menu" name="MainMenuBtn" class="pauseButton" style="width: 12.5%;" />
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1;" />
+</ui:UXML>

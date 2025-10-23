@@ -2,49 +2,76 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
-{    
-    public GameObject mainMenuUI;
-    public GameObject gameplayUI;
-    public GameObject pauseUI;
-    public GameObject gameoverUI; 
+{
+    [SerializeField] private UIDocument mainMenuUI;
+    [SerializeField] private UIDocument pauseUI;
+    [SerializeField] private UIDocument gamePlayUI; 
+
+       
+   
 
     private void Awake() 
     {
+        mainMenuUI = FindUIDocument("MainMenuUI");
+        pauseUI = FindUIDocument("PauseUI");
+        gamePlayUI = FindUIDocument("GameplayUI"); 
+        
+
+    }
+
+    private void Start() 
+    {
         DisabledMenuUI();
     }
+        
 
 
     public void DisabledMenuUI() 
     {
-        mainMenuUI.SetActive(false);
-        pauseUI.SetActive(false);
-        gameplayUI.SetActive(false);
-        gameoverUI.SetActive(false);
+        mainMenuUI.rootVisualElement.style.display = DisplayStyle.None;
+        pauseUI.rootVisualElement.style.display = DisplayStyle.None;
+        gamePlayUI.rootVisualElement.style.display = DisplayStyle.None;        
+        
     }
 
     public void EnableMainMenu() 
     {
         DisabledMenuUI();
-        mainMenuUI.SetActive(true);
+        mainMenuUI.rootVisualElement.style.display = DisplayStyle.Flex;
+        
+        
     }
 
     public void EnableGameplay() 
     {
         DisabledMenuUI();
-        gameplayUI.SetActive(true);
+        gamePlayUI.rootVisualElement.style.display = DisplayStyle.Flex;
+        
     }
 
     public void EnablePause() 
     {
         DisabledMenuUI();
-        pauseUI.SetActive(true);
+        pauseUI.rootVisualElement.style.display = DisplayStyle.Flex;
+        
     }
 
-    public void EnableGameover() 
+    
+
+
+    private UIDocument FindUIDocument(string name)
     {
-        DisabledMenuUI();
-        gameoverUI.SetActive(true);
-    }
+        var documents = Object.FindObjectsByType<UIDocument>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
+        foreach (var doc in documents)
+        {
+            if (doc.name == name)
+            {
+                return doc;
+            }
+        }
+        Debug.LogWarning($"UIDocument '{name}' not found in scene.");
+        return null;
+    }
 
 }

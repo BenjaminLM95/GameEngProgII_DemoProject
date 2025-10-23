@@ -22,18 +22,18 @@ public class GameState_MainMenu : IState
 
     public void EnterState() 
     {
-        Debug.Log("Entered Main Menu state");
+        //Debug.Log("Entered Main Menu state");
         uiManager.EnableMainMenu(); 
     }
 
     public void FixedUpdateState() 
     {
-        Debug.Log("Running Main Menu FixedUpdate State");
+        //Debug.Log("Running Main Menu FixedUpdate State");
     }
 
     public void UpdateState() 
     {
-        Debug.Log("Running Main Menu Update State");
+       // Debug.Log("Running Main Menu Update State");
 
         if (Keyboard.current[Key.G].wasPressedThisFrame)
         {
@@ -44,11 +44,11 @@ public class GameState_MainMenu : IState
 
     public void LateUpdateState() 
     {
-        Debug.Log("Running Main Menu LateUpdate State");
+        //Debug.Log("Running Main Menu LateUpdate State");
     }
 
     public void ExitState() 
     {
-        Debug.Log("Exiting Main Menu State");
+        //Debug.Log("Exiting Main Menu State");
     }
 }

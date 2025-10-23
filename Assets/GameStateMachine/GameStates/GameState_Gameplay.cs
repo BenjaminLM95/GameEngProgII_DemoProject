@@ -24,18 +24,18 @@ public class GameState_Gameplay : IState
 
     public void EnterState() 
     {
-        Debug.Log("Entered Gameplay state");
+        //Debug.Log("Entered Gameplay state");
         uiManager.EnableGameplay(); 
     }
 
     public void FixedUpdateState() 
     {
-        Debug.Log("Running Gameplay FixedUpdate State"); 
+        //Debug.Log("Running Gameplay FixedUpdate State"); 
     }
 
     public void UpdateState() 
     {
-        Debug.Log("Running Gameplay Update State");
+        //Debug.Log("Running Gameplay Update State");
 
         playerController.HandlePlayerMovement(); 
 
@@ -63,12 +63,12 @@ public class GameState_Gameplay : IState
     {
         playerController.HandlePlayerLook();
 
-        Debug.Log("Running Gameplay LateUpdate State");
+        //Debug.Log("Running Gameplay LateUpdate State");
     }
 
     public void ExitState() 
     {
-        Debug.Log("Exiting Gameplay State"); 
+        //Debug.Log("Exiting Gameplay State"); 
     }
 
     

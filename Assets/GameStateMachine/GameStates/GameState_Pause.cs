@@ -22,18 +22,18 @@ public class GameState_Pause : IState
 
     public void EnterState()
     {
-        Debug.Log("Entered Pause state");
+        //Debug.Log("Entered Pause state");
         uiManager.EnablePause(); 
     }
 
     public void FixedUpdateState()
     {
-        Debug.Log("Running Pause FixedUpdate State");
+        //Debug.Log("Running Pause FixedUpdate State");
     }
 
     public void UpdateState()
     {
-        Debug.Log("Running Pause Update State");
+        //Debug.Log("Running Pause Update State");
 
         if (Keyboard.current[Key.Escape].wasPressedThisFrame)
         {
@@ -45,11 +45,11 @@ public class GameState_Pause : IState
 
     public void LateUpdateState()
     {
-        Debug.Log("Running Pause LateUpdate State");
+        //Debug.Log("Running Pause LateUpdate State");
     }
 
     public void ExitState()
     {
-        Debug.Log("Exiting Pause State");
+        //Debug.Log("Exiting Pause State");
     }
 }

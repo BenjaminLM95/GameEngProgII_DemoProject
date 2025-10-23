@@ -22,14 +22,14 @@ public class GameState_Gameover : IState
 
     public void EnterState()
     {
-        Debug.Log("Entered Game Over state");
-        uiManager.EnableGameover();
+        //Debug.Log("Entered Game Over state");
+        //uiManager.EnableGameover();
 
     }
 
     public void FixedUpdateState()
     {
-        Debug.Log("Running Game Over FixedUpdate State");
+        //Debug.Log("Running Game Over FixedUpdate State");
     }
 
     public void UpdateState()
@@ -45,11 +45,11 @@ public class GameState_Gameover : IState
 
     public void LateUpdateState()
     {
-        Debug.Log("Running Game Over LateUpdate State");
+        //Debug.Log("Running Game Over LateUpdate State");
     }
 
     public void ExitState()
     {
-        Debug.Log("Exiting Game Over State");
+        //Debug.Log("Exiting Game Over State");
     }
 }

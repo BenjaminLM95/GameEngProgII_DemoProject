@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Menu_USS.uss?fileID=7433441132597879392&amp;guid=c55b7f11e27511f419fc8f8e8d180207&amp;type=3#Menu_USS" />
+    <ui:VisualElement name="MainMenu" style="flex-grow: 1;">
+        <ui:VisualElement name="CentrePoint" style="flex-grow: 1;">
+            <ui:Label text="Game Eng Prog II&#10;Demo Project" name="TitleLabel" class="titleLabel" style="font-size: 60px; -unity-font-style: bold;" />
+            <ui:VisualElement name="MenuButtons" style="flex-grow: 1; margin-top: 15px; margin-bottom: 15px; font-size: 24px;">
+                <ui:Button text="Play" name="PlayButton" class="menuButtons" style="font-size: 24px; -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Fonts/PerfectDOSVGA437.ttf?fileID=12800000&amp;guid=74a5091d8707f334b9a5c31ef71a64ba&amp;type=3#PerfectDOSVGA437&quot;); background-color: rgba(188, 188, 188, 0);" />
+                <ui:Button text="Options" name="OptionButton" class="menuButtons" style="font-size: 24px; -unity-font-style: bold;" />
+                <ui:Button text="Quit" name="QuitButton" class="menuButtons" style="-unity-font-style: bold; font-size: 24px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

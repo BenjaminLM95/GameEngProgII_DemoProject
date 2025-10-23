@@ -14,16 +14,16 @@ public class GameStateManager : MonoBehaviour
     public GameState_MainMenu gameState_MainMenu = GameState_MainMenu.Instance;
     public GameState_Gameplay gameState_Gameplay = GameState_Gameplay.Instance;
     public GameState_Pause gameState_Pause = GameState_Pause.Instance; 
-    public GameState_Gameover gameState_Gameover = GameState_Gameover.Instance; 
-    
-    
+    public GameState_Gameover gameState_Gameover = GameState_Gameover.Instance;
+
+    [SerializeField] private LevelManager levelManager; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentState = gameState_MainMenu;
         currentState.EnterState();
-       
+       levelManager = FindFirstObjectByType<LevelManager>();
 
 
     }
@@ -86,7 +86,8 @@ public class GameStateManager : MonoBehaviour
 
     public void Play() 
     {
-        SwitchToState(gameState_Gameplay); 
+        SwitchToState(gameState_Gameplay);
+        levelManager.StartGame(); 
     }
 
     public void Quit() 
@@ -96,7 +97,8 @@ public class GameStateManager : MonoBehaviour
 
     public void MainMenu() 
     {
-        SwitchToState(gameState_MainMenu); 
+        SwitchToState(gameState_MainMenu);
+        levelManager.GoToMainMenu(); 
     }
 
     public void GameOver() 

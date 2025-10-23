@@ -1,0 +1,26 @@
+.titleLabel {
+    justify-content: flex-start;
+    align-self: center;
+    font-size: 60px;
+    -unity-font-style: bold;
+    -unity-font-definition: resource('FlatSkin/Font/Roboto-MediumItalic');
+    -unity-text-align: upper-center;
+}
+
+.menuButtons {
+    width: 12.5%;
+    align-self: center;
+    align-items: stretch;
+    bottom: -10%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    -unity-font-definition: url("project://database/Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Fonts/PerfectDOSVGA437.ttf?fileID=12800000&guid=74a5091d8707f334b9a5c31ef71a64ba&type=3#PerfectDOSVGA437");
+    background-color: rgba(135, 135, 135, 0);
+    opacity: 1;
+}
+
+.menuButtons:hover {
+    -unity-font-definition: url("project://database/Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Fonts/PerfectDOSVGA437.ttf?fileID=12800000&guid=74a5091d8707f334b9a5c31ef71a64ba&type=3#PerfectDOSVGA437");
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
