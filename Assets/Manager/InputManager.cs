@@ -31,7 +31,8 @@ public class InputManager : MonoBehaviour, Inputs.IPlayerActions
 
     public event Action<InputAction.CallbackContext> JumpInputEvent;
     public event Action<InputAction.CallbackContext> SprintInputEvent;
-    public event Action<InputAction.CallbackContext> CrouchInputEvent; 
+    public event Action<InputAction.CallbackContext> CrouchInputEvent;
+    public event Action<InputAction.CallbackContext> InteractInputEvent;
     
     
 
@@ -71,6 +72,10 @@ public class InputManager : MonoBehaviour, Inputs.IPlayerActions
         SprintInputEvent?.Invoke(context); 
     }
 
+    public void OnInteract(InputAction.CallbackContext context) 
+    {
+        InteractInputEvent?.Invoke(context);
+    }
 
     void OnEnable() 
     {
