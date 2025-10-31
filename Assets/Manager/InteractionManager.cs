@@ -60,6 +60,7 @@ public class InteractionManager : MonoBehaviour
                 currentFocusedInteractable = hitInteractable;
                 currentFocusedInteractable.SetFocus(true);
 
+                // 3. 
 
                 // we hit an object with an interactable layer
 
