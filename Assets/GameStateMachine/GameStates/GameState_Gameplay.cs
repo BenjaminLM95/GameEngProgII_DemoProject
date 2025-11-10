@@ -7,8 +7,8 @@ public class GameState_Gameplay : IState
     GameStateManager gameStateManager => GameManager.Instance.GameStateManager;
     PlayerController playerController => GameManager.Instance.PlayerController;
     UIManager uiManager => GameManager.Instance.UIManager;
-   
-    
+
+
 
     #region Singleton Instance
 

@@ -7,6 +7,7 @@ public class GameState_MainMenu : IState
     GameStateManager gameStateManager => GameManager.Instance.GameStateManager;
     UIManager uiManager => GameManager.Instance.UIManager;
 
+
     #region Singleton Instance
 
     // A single, readonly instance of the atate class is created.

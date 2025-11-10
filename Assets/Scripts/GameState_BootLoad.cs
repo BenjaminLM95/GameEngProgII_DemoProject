@@ -26,7 +26,7 @@ public class GameState_BootLoad : IState
         //Debug.Log("Entered Boat Load state");
         Cursor.visible = false;
 
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
 
         // if BootLoader is the only active scene, redirect to MainMenu
         if(SceneManager.sceneCount == 1 && SceneManager.GetActiveScene().name == "BootLoader") 
@@ -43,6 +43,8 @@ public class GameState_BootLoad : IState
         // If all the above fails, go to the level scene
         else 
         {
+            Debug.Log("Bootloading player!");
+            GameManager.Instance.LevelManager.BootloadPlayer();
             gameManager.GameStateManager.SwitchToState(GameState_Gameplay.Instance);
             return;
         }

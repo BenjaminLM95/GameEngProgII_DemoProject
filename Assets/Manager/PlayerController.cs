@@ -412,14 +412,18 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void MovePlayerToSpawnPosition(Transform _spawnPosition) 
+    public void MovePlayerToSpawnPosition() 
     {
+        Transform spawnPoint = GameObject.FindWithTag("SpawnPoint").transform;
+        
+
         // Moving player to spawn position        
         // turn off character controller
         characterController.enabled = false; 
 
-        transform.position = spawnPosition.position;
-        transform.rotation = spawnPosition.rotation;
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+        transform.eulerAngles = spawnPoint.eulerAngles;
 
         //turn on character controller
         characterController.enabled = true; 

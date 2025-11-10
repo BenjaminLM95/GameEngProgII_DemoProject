@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,12 +7,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameStateManager gameStateManager;
 
     public GameObject player;
+    public PlayerController playerController;
     bool exit = false;
     private string spawnPointName;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        playerController = GameManager.Instance.PlayerController;
         gameStateManager = FindFirstObjectByType<GameStateManager>();
     }
 
@@ -54,10 +57,15 @@ public class LevelManager : MonoBehaviour
 
     void onSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Scene: " + scene.name + "is loaded");        
+        Debug.Log("Scene: " + scene.name + "is loaded");
         SetPlayerToSpawn(spawnPointName);
-
     }
+
+    public void BootloadPlayer()
+    {
+        playerController.MovePlayerToSpawnPosition();
+    }
+
 
     public void SetPlayerToSpawn(string spawnPointName)
     {
@@ -69,6 +77,7 @@ public class LevelManager : MonoBehaviour
                 // Set the player position to the spawn object
                 Transform spawnPointTransform = spawnPointObject.transform;
                 player.transform.position = spawnPointTransform.position;
+                player.transform.eulerAngles = spawnPointTransform.eulerAngles;
             }
             else
             {

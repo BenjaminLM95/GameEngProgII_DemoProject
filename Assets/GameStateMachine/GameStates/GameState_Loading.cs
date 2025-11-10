@@ -23,7 +23,6 @@ public class GameState_Loading : IState
 
     public void EnterState()
     {
-        
 
 
     }

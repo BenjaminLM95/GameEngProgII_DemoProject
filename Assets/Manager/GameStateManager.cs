@@ -7,6 +7,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private string currentActiveState;
 
     // Private variable to store state information
+    public IState CurrentState => currentState;
     private IState currentState;
     private IState lastState;  //(Kept private for encapsulation)
 
