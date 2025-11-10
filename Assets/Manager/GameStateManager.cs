@@ -15,13 +15,16 @@ public class GameStateManager : MonoBehaviour
     public GameState_Gameplay gameState_Gameplay = GameState_Gameplay.Instance;
     public GameState_Pause gameState_Pause = GameState_Pause.Instance; 
     public GameState_Gameover gameState_Gameover = GameState_Gameover.Instance;
+    public GameState_BootLoad gameState_BootLoad = GameState_BootLoad.Instance;
+    public GameState_Loading gameState_Loading = GameState_Loading.Instance; 
+     
 
     [SerializeField] private LevelManager levelManager; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentState = gameState_MainMenu;
+        currentState = gameState_BootLoad;
         currentState.EnterState();
        levelManager = FindFirstObjectByType<LevelManager>();
 
