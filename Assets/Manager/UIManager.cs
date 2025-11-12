@@ -5,17 +5,20 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private UIDocument mainMenuUI;
     [SerializeField] private UIDocument pauseUI;
-    [SerializeField] private UIDocument gamePlayUI; 
+    [SerializeField] private UIDocument gamePlayUI;
+    [SerializeField] private UIDocument loadingUI;
 
-       
-   
+    public LoadingUIController LoadingUIController; 
+
 
     private void Awake() 
     {
         mainMenuUI = FindUIDocument("MainMenuUI");
         pauseUI = FindUIDocument("PauseUI");
-        gamePlayUI = FindUIDocument("GameplayUI"); 
-        
+        gamePlayUI = FindUIDocument("GameplayUI");
+        loadingUI = FindUIDocument("LoadingUI");
+
+        LoadingUIController = loadingUI.GetComponent<LoadingUIController>(); 
 
     }
 
@@ -30,7 +33,8 @@ public class UIManager : MonoBehaviour
     {
         mainMenuUI.rootVisualElement.style.display = DisplayStyle.None;
         pauseUI.rootVisualElement.style.display = DisplayStyle.None;
-        gamePlayUI.rootVisualElement.style.display = DisplayStyle.None;        
+        gamePlayUI.rootVisualElement.style.display = DisplayStyle.None;
+        loadingUI.rootVisualElement.style.display = DisplayStyle.None; 
         
     }
 
@@ -56,7 +60,11 @@ public class UIManager : MonoBehaviour
         
     }
 
-    
+    public void EnableLoading() 
+    {
+        DisabledMenuUI();
+        loadingUI.rootVisualElement.style.display = DisplayStyle.Flex; 
+    }
 
 
     private UIDocument FindUIDocument(string name)

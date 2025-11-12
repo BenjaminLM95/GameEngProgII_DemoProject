@@ -23,7 +23,13 @@ public class GameState_Loading : IState
 
     public void EnterState()
     {
+        Debug.Log("Enter Loading Screen"); 
 
+        uiManager.EnableLoading();
+
+        Cursor.visible = false;
+
+        Time.timeScale = 1f; 
 
     }
 
@@ -47,5 +53,6 @@ public class GameState_Loading : IState
     public void ExitState()
     {
         //Debug.Log("Exiting Loading State");
+        Debug.Log("Exited Loading state"); 
     }
 }

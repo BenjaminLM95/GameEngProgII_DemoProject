@@ -3,17 +3,23 @@ using UnityEngine.UIElements;
 
 public class LoadingUIController : MonoBehaviour
 {
+    UIDocument loadingDoc => GetComponent<UIDocument>(); 
+    private ProgressBar progressBar;
 
-    private ProgressBar progressBar; 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
-        
+        var root = loadingDoc.rootVisualElement;
+        progressBar = root.Q<ProgressBar>("ProgressBar");
+        if(progressBar == null) 
+        {
+            Debug.LogError("Progress Bar not found in Loading UI Document");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateProgressBar(float progress) 
     {
-        
+        progressBar.value = progress;
+        progressBar.title = $"{(int)(progress * 100)}%"; 
     }
+
 }
