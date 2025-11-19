@@ -24,7 +24,8 @@ public class GameState_MainMenu : IState
     public void EnterState() 
     {
         //Debug.Log("Entered Main Menu state");
-        uiManager.EnableMainMenu(); 
+        uiManager.EnableMainMenu();
+        Cursor.visible = true; 
     }
 
     public void FixedUpdateState() 

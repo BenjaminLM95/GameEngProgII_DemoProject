@@ -66,7 +66,25 @@ public class LevelManager : MonoBehaviour
     void onSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Scene: " + scene.name + "is loaded");
-        SetPlayerToSpawn(spawnPointName);
+
+        int sceneIndex = scene.buildIndex; 
+
+        if(sceneIndex > 1) 
+        {
+            gameStateManager.SwitchToState(GameState_Gameplay.Instance);
+            SetPlayerToSpawn(spawnPointName);
+        }
+        else if(sceneIndex == 1) 
+        {
+            gameStateManager.SwitchToState(GameState_MainMenu.Instance);
+            SetPlayerToSpawn("SpawnPointM"); 
+        }
+        else 
+        {
+            gameStateManager.SwitchToState(GameState_BootLoad.Instance); 
+        }
+
+            
     }
 
     public void BootloadPlayer()
